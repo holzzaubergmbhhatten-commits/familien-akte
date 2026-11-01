@@ -26,3 +26,5 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 - `ansicht.py`: was Papa sieht. Immer nur eine Frage, Startzahlen, Rechte nur für die Akte.
 - `fehler.py`: Fehler werden lokal gespeichert und Marco per Telegram gemeldet (AKTE_ADMIN_CHAT auf dem Gerät).
 - `test_ansicht.py`: Prüfung ohne echte Daten.
+- `aktionen.py`: Aktionen an Dokumenten wie in der Akte zu Hause (ansehen, Ordner, Foto, Notiz, eingereicht, zusammenfügen, auflösen, löschen mit Bestätigung), dazu Vorgangsarten: Nebenkosten, Mietvertrag, Steuer, Depot, Versicherung, Sonstiges.
+- `test_aktionen.py`: Prüfung ohne echte Dokumente.
