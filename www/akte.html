@@ -37,7 +37,7 @@
 </head>
 <body>
 <div class="wrap" id="oben">
-  <div class="kopf"><img src="bilder/wappen-schlag.png" alt="Familienwappen"><small>Udo Schlag</small><h1>Akte</h1><p>Unterlagen, Verträge und Abrechnungen</p></div>
+  <div class="kopf"><img src="bilder/wappen-schlag.png" alt="Familienwappen"><small id="name"></small><h1>Akte</h1><p>Unterlagen, Verträge und Abrechnungen</p></div>
   <div class="fehler" id="fehler" role="alert"></div>
 
   <div class="karte" id="start"><div id="zusammen" class="zahl">Lade …</div></div>
@@ -65,6 +65,9 @@ const BESITZER = { papa: "Papa", stief: "Stiefmutter", gemeinsam: "Gemeinsam", u
 const ARTEN = { nebenkosten: "Nebenkosten", mietvertrag: "Mietvertrag", steuer: "Steuer", depot: "Depot / Konto", versicherung: "Versicherung", sonst: "Sonstiges" };
 
 let daten = BEISPIEL;
+// Name wird bei der Einspielung aus der Einstellung gesetzt, nicht hier im Code.
+const NAME = window.AKTE_NAME || '';
+document.getElementById('name').textContent = NAME;
 const $ = id => document.getElementById(id);
 const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
