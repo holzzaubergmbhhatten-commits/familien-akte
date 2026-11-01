@@ -1,0 +1,15 @@
+{
+  "_hinweis": "Beispiel ohne echte Daten. Echte Dateien liegen nur auf dem Gerät, nie im Repository.",
+  "id": "beispiel-haus-1",
+  "art": "Mehrfamilienhaus",
+  "adresse": "Straße Nr, PLZ Ort",
+  "wohneinheiten": [
+    {"nr": 1, "lage": "EG links", "flaeche_qm": 0, "mieter": "Name", "vertrag": "Datei"}
+  ],
+  "nebenkosten": [
+    {"jahr": 2026, "abrechnung": "Datei", "summe_eur": 0}
+  ],
+  "steuer": [
+    {"jahr": 2026, "beleg": "Datei", "art": "Werbungskosten"}
+  ]
+}

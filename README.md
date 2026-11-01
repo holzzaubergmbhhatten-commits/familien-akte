@@ -13,3 +13,7 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 - Keine echten Dokumente, Namen von Mietern, Kontodaten oder Zugangsdaten ins Repository.
 - Schlüssel und Passwörter nur in Home Assistant eintragen, nie in Dateien.
 - Dateien mit Daten sind per `.gitignore` ausgeschlossen.
+
+## Vorlagen
+- `vorlagen/objekt.json.beispiel`: Aufbau eines Hauses mit Wohneinheiten, Nebenkosten und Steuer (ohne echte Daten)
+- `vorlagen/ordner.md`: Ordnerstruktur auf dem Gerät
