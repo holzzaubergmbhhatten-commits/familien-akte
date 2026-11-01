@@ -21,3 +21,5 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 ## Akte-Kern (akte_kern/)
 - `eingang.py`: nimmt Dokumente an, fragt nach Objekt und Besitzer, ordnet zu. Daten nur über `AKTE_PFAD` auf dem Gerät.
 - `test_eingang.py`: Prüfung mit temporärem Ordner, ohne echte Daten.
+- `telegram_eingang.py`: Telegram-Eingang. Nur erlaubte Chat-IDs (Umgebungsvariable AKTE_CHATS auf dem Gerät), Rückfragen als Knöpfe.
+- `test_telegram.py`: Prüfung ohne echte Chats und Tokens.
