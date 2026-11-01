@@ -131,7 +131,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             token, fehler = anmelden(passwort)
             if fehler:
                 return self._antwort(401, {"ok": False, "fehler": fehler})
-            kopf = {"Set-Cookie": f"akte_sitz={token}; Path=/; Max-Age={SITZUNG_SEKUNDEN}; HttpOnly; Secure; SameSite=Strict"}
+            kopf = {"Set-Cookie": f"akte_sitz={token}; Path=/; Max-Age={SITZUNG_SEKUNDEN}; HttpOnly; SameSite=Strict"}
             return self._antwort(200, {"ok": True}, kopf=kopf)
         if pfad.startswith("/api/") and self._eingeloggt():
             return self._antwort(200, {"ok": True})

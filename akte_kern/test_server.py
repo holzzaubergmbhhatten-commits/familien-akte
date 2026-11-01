@@ -5,8 +5,8 @@ import server
 import tempfile
 _tmp = tempfile.mkdtemp()
 os.environ["AKTE_PFAD"] = _tmp
-open(os.path.join(_tmp, "passwort.hash"), "w").write(server.passwort_hash("test-passwort-123"))
-HASH = open(os.path.join(_tmp, "passwort.hash")).read()
+open(os.path.join(_tmp, "passwort.txt"), "w").write("test-passwort-123")
+HASH = "test-passwort-123"
 
 # Hash prüft richtig und falsch
 assert server.passwort_pruefen("test-passwort-123", HASH)
