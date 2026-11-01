@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Akte</title>
+<style>
+  :root { --bg:#F2F2F7; --karte:#fff; --text:#1C1C1E; --grau:#8E8E93; --gruen:#34C759; --rot:#FF3B30; --orange:#FF9500; --blau:#2a6fdb; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#000; --karte:#1C1C1E; --text:#F2F2F7; --grau:#98989D; } }
+  :root[data-theme="dark"] { --bg:#000; --karte:#1C1C1E; --text:#F2F2F7; --grau:#98989D; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system, system-ui, Roboto, sans-serif; font-size:18px; line-height:1.45; }
+  .wrap { max-width:640px; margin:0 auto; padding:16px; }
+  h1 { font-size:26px; margin:8px 0 14px; }
+  .karte { background:var(--karte); border-radius:16px; padding:16px; margin-bottom:14px; }
+  .zahl { color:var(--grau); font-size:16px; }
+  .frage { border:2px solid var(--orange); }
+  .knopf { display:block; width:100%; text-align:left; background:var(--bg); color:var(--text); border:0; border-radius:12px; padding:14px; margin:8px 0; font-size:18px; cursor:pointer; }
+  .knopf.gross { background:var(--blau); color:#fff; text-align:center; font-weight:600; }
+  .aktionen { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .aktionen button { border:0; border-radius:10px; padding:10px 12px; font-size:16px; background:var(--bg); color:var(--text); cursor:pointer; }
+  .aktionen button.rot { color:var(--rot); }
+  .fehler { background:#ffe5e3; color:#7a1b15; border-radius:12px; padding:12px 14px; margin-bottom:14px; display:none; }
+  .klein { color:var(--grau); font-size:15px; }
+  .verdeckt { filter:blur(8px); pointer-events:none; }
+</style>
+</head>
+<body>
+<div class="wrap" id="oben">
+  <h1>📁 Akte</h1>
+  <div class="fehler" id="fehler" role="alert"></div>
+
+  <div class="karte" id="start"><div id="zusammen" class="zahl">Lade …</div></div>
+
+  <div class="karte frage" id="frageKarte" style="display:none">
+    <div id="frageText" style="font-weight:600;margin-bottom:6px"></div>
+    <div id="frageAntworten"></div>
+  </div>
+
+  <h2 style="font-size:20px">Dokumente</h2>
+  <div id="liste"></div>
+</div>
+
+<script>
+// Datenquelle: wird bei der Einspielung auf die Home-Assistant-Verbindung der Akte gesetzt.
+// Bis dahin zeigt die Seite ein Beispiel, damit man das Aussehen prüfen kann.
+const BEISPIEL = {
+  dokumente: [
+    { id: "1", datei: "Beispiel Nebenkosten 2025.pdf", art: "nebenkosten", objekt: "birk", besitzer: "papa", zugeordnet: true },
+    { id: "2", datei: "Beispiel Rechnung.pdf", art: "sonst", objekt: "unklar", besitzer: "unklar", zugeordnet: false }
+  ]
+};
+const OBJEKTE = { birk: "Birkenheider Straße 24", gruppen: "Gruppenbührener Straße", glock: "Glockenstein", privat: "Privat", unklar: "Noch unklar" };
+const BESITZER = { papa: "Papa", stief: "Stiefmutter", gemeinsam: "Gemeinsam", unklar: "Noch unklar" };
+const ARTEN = { nebenkosten: "Nebenkosten", mietvertrag: "Mietvertrag", steuer: "Steuer", depot: "Depot / Konto", versicherung: "Versicherung", sonst: "Sonstiges" };
+
+let daten = BEISPIEL;
+const $ = id => document.getElementById(id);
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function fehlerZeigen(kurz) {
+  // Papa sieht nur die einfache Meldung; die Technik geht an Marco (fehler.py).
+  $("fehler").textContent = "Da hat etwas nicht geklappt: " + kurz + ". Marco wurde informiert.";
+  $("fehler").style.display = "block";
+}
+
+function zeichne() {
+  const offen = daten.dokumente.filter(d => !d.zugeordnet);
+  const fertig = daten.dokumente.length - offen.length;
+  $("zusammen").textContent = fertig + " Dokumente abgelegt" + (offen.length ? ", " + offen.length + " warten auf eine kurze Antwort." : ".");
+
+  // Immer nur eine Frage
+  const d = offen[0];
+  if (d) {
+    const objektFehlt = d.objekt === "unklar";
+    $("frageKarte").style.display = "block";
+    $("frageText").textContent = objektFehlt
+      ? "„" + d.datei + "“: Zu welchem Objekt gehört das?"
+      : "„" + d.datei + "“: Wem gehört das?";
+    const optionen = objektFehlt ? OBJEKTE : BESITZER;
+    const feld = objektFehlt ? "objekt" : "besitzer";
+    $("frageAntworten").innerHTML = Object.entries(optionen).map(([k, n]) =>
+      `<button class="knopf" onclick="antworte('${d.id}','${feld}','${k}')">${esc(n)}</button>`).join("");
+  } else {
+    $("frageKarte").style.display = "none";
+  }
+
+  // Liste der Dokumente mit den Aktionen
+  $("liste").innerHTML = daten.dokumente.map(d => `
+    <div class="karte">
+      <div style="font-weight:600">${esc(d.datei)}</div>
+      <div class="klein">${esc(ARTEN[d.art] || "")} · ${esc(OBJEKTE[d.objekt] || "")} · ${esc(BESITZER[d.besitzer] || "")}</div>
+      <div class="aktionen">
+        <button onclick="aktion('${d.id}','ansehen')">PDF ansehen</button>
+        <button onclick="aktion('${d.id}','ordner')">Ordner</button>
+        <button onclick="aktion('${d.id}','foto')">Foto anhängen</button>
+        <button onclick="aktion('${d.id}','notiz')">Notiz</button>
+        <button onclick="aktion('${d.id}','eingereicht')">Eingereicht</button>
+        <button onclick="aktion('${d.id}','zusammenfuegen')">Zusammenfügen</button>
+        <button onclick="aktion('${d.id}','loeschen')" class="rot">Löschen</button>
+      </div>
+    </div>`).join("");
+}
+
+// Die Knöpfe melden an die Akte. Bei der Einspielung wird hier die echte Verbindung eingetragen.
+function sende(vorgang) {
+  // Beispielmodus: nur lokal, nichts wird gespeichert.
+  return Promise.resolve({ ok: true, ...vorgang });
+}
+
+function antworte(id, feld, wert) {
+  const d = daten.dokumente.find(x => x.id === id);
+  if (!d) return fehlerZeigen("Dokument nicht gefunden");
+  d[feld] = wert;
+  d.zugeordnet = d.objekt !== "unklar" && d.besitzer !== "unklar";
+  sende({ id, feld, wert }).then(zeichne).catch(() => fehlerZeigen("Antwort konnte nicht gespeichert werden"));
+}
+
+function aktion(id, art) {
+  if (art === "loeschen" && !confirm("Dieses Dokument wirklich löschen? Es bleibt im Verlauf sichtbar.")) return;
+  let wert = null;
+  if (art === "ordner") wert = prompt("Ordner:") ;
+  if (art === "notiz") wert = prompt("Notiz:");
+  if (art === "foto") wert = prompt("Name des Fotos:");
+  if (art === "ansehen") return alert("Das PDF wird bei der Einspielung angezeigt.");
+  sende({ id, art, wert }).then(() => {
+    if (art === "eingereicht") alert("Als eingereicht markiert.");
+  }).catch(() => fehlerZeigen("Aktion konnte nicht ausgeführt werden"));
+}
+
+// Datenschutz am Bildschirm: nach 3 Minuten ohne Berührung wird die Liste verdeckt (wie in der Familienakte).
+let timer;
+function ruecksetzen() {
+  document.querySelectorAll(".wrap > div:not(.fehler)").forEach(e => e.classList.remove("verdeckt"));
+  clearTimeout(timer);
+  timer = setTimeout(() => document.querySelectorAll(".wrap > div:not(.fehler)").forEach(e => e.classList.add("verdeckt")), 3 * 60 * 1000);
+}
+["touchstart", "click", "keydown"].forEach(e => document.addEventListener(e, ruecksetzen));
+ruecksetzen();
+zeichne();
+</script>
+</body>
+</html>
