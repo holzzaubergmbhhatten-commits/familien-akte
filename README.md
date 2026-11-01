@@ -16,4 +16,4 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 
 ## Vorlagen
 - `vorlagen/objekt.json.beispiel`: Aufbau eines Hauses mit Wohneinheiten, Nebenkosten und Steuer (ohne echte Daten)
-- `vorlagen/ordner.md`: Ordnerstruktur auf dem Gerät
+- `vorlagen/ordner.md`: nur der Hauptordner auf dem Gerät
