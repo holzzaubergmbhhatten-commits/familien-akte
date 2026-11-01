@@ -16,7 +16,7 @@ with tempfile.TemporaryDirectory() as tmp:
     antwort = verarbeite_dokument("111", "x.txt", quelle)
     assert "Objekt" in antwort["text"] and antwort["knoepfe"]
     eintrag = {"datei": "x.txt", "objekt": "unklar", "besitzer": "unklar", "zugeordnet": False}
-    eintrag, schritt = verarbeite_antwort("111", "objekt|birk", eintrag)
+    eintrag, schritt = verarbeite_antwort("111", "objekt|haus1", eintrag)
     assert "Besitzer" in schritt["text"] or "gehört" in schritt["text"]
     eintrag, schritt = verarbeite_antwort("111", "besitzer|papa", eintrag)
     assert eintrag["zugeordnet"] and schritt["knoepfe"] is None

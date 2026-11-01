@@ -11,7 +11,7 @@ with tempfile.TemporaryDirectory() as tmp:
     e = eintrag_anlegen("beispiel.txt", quelle)
     assert not e["zugeordnet"]
     assert len(rueckfragen(e)) == 2
-    e = zuordnen(e, "birk", "papa")
+    e = zuordnen(e, "haus1", "papa")
     assert e["zugeordnet"] is True
     assert rueckfragen(e) == []
     e2 = zuordnen(eintrag_anlegen("b2.txt", quelle), "gibtsnicht", "papa")

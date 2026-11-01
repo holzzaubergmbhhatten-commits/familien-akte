@@ -19,7 +19,7 @@ with tempfile.TemporaryDirectory() as tmp:
 
     frage = naechste_frage({"objekt": "unklar", "besitzer": "unklar"})
     assert frage["frage"].startswith("Zu welchem Objekt") and len(frage["antworten"]) == 5
-    assert naechste_frage({"objekt": "birk", "besitzer": "papa"}) is None
+    assert naechste_frage({"objekt": "haus1", "besitzer": "papa"}) is None
 
     z = zusammenfassung([{"zugeordnet": True}, {"zugeordnet": False}])
     assert z["fertig"] == 1 and z["wartet"] == 1
