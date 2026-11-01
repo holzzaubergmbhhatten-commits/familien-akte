@@ -39,10 +39,12 @@ def passwort_pruefen(passwort, gespeichert):
 
 
 def gespeicherter_hash():
-    wert = os.environ.get("AKTE_PASSWORT_HASH", "")
-    if not wert:
-        raise RuntimeError("AKTE_PASSWORT_HASH ist nicht gesetzt (auf dem Gerät anlegen)")
-    return wert
+    """Liest den Hash aus AKTE_PFAD/passwort.hash (wird von passwort_setzen.py angelegt)."""
+    datei = os.path.join(os.environ.get("AKTE_PFAD", "."), "passwort.hash")
+    if not os.path.isfile(datei):
+        raise RuntimeError("Noch kein Passwort gesetzt: passwort_setzen.py ausführen")
+    with open(datei, encoding="utf-8") as f:
+        return f.read().strip()
 
 
 def anmelden(passwort):

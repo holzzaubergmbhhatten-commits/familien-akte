@@ -2,11 +2,15 @@
 import os
 import server
 
-os.environ["AKTE_PASSWORT_HASH"] = server.passwort_hash("test-passwort-123")
+import tempfile
+_tmp = tempfile.mkdtemp()
+os.environ["AKTE_PFAD"] = _tmp
+open(os.path.join(_tmp, "passwort.hash"), "w").write(server.passwort_hash("test-passwort-123"))
+HASH = open(os.path.join(_tmp, "passwort.hash")).read()
 
 # Hash prüft richtig und falsch
-assert server.passwort_pruefen("test-passwort-123", os.environ["AKTE_PASSWORT_HASH"])
-assert not server.passwort_pruefen("falsch", os.environ["AKTE_PASSWORT_HASH"])
+assert server.passwort_pruefen("test-passwort-123", HASH)
+assert not server.passwort_pruefen("falsch", HASH)
 assert not server.passwort_pruefen("x", "kaputt")
 
 # Anmelden: richtig gibt Sitzung, falsch nicht

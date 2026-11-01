@@ -13,5 +13,9 @@ if __name__ == "__main__":
         raise SystemExit("Die beiden Eingaben stimmen nicht überein.")
     if len(a) < 10:
         raise SystemExit("Bitte mindestens 10 Zeichen.")
-    print("\nHash (als AKTE_PASSWORT_HASH eintragen):")
-    print(passwort_hash(a))
+    import os
+    ordner = os.environ.get("AKTE_PFAD", ".")
+    os.makedirs(ordner, exist_ok=True)
+    with open(os.path.join(ordner, "passwort.hash"), "w", encoding="utf-8") as f:
+        f.write(passwort_hash(a))
+    print("Passwort gespeichert. Es steht nirgends im Klartext.")
