@@ -17,3 +17,7 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 ## Vorlagen
 - `vorlagen/objekt.json.beispiel`: Aufbau eines Hauses mit Wohneinheiten, Nebenkosten und Steuer (ohne echte Daten)
 - `vorlagen/ordner.md`: nur der Hauptordner auf dem Gerät
+
+## Akte-Kern (akte_kern/)
+- `eingang.py`: nimmt Dokumente an, fragt nach Objekt und Besitzer, ordnet zu. Daten nur über `AKTE_PFAD` auf dem Gerät.
+- `test_eingang.py`: Prüfung mit temporärem Ordner, ohne echte Daten.
