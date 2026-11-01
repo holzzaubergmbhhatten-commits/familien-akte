@@ -1,0 +1,12 @@
+# Daten nie ins Repository
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.docx
+*.json
+akte_ablage/
+daten/
+secrets*
+*.key
+*.env
