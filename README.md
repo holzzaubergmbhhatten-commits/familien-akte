@@ -23,3 +23,6 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 - `test_eingang.py`: Prüfung mit temporärem Ordner, ohne echte Daten.
 - `telegram_eingang.py`: Telegram-Eingang. Nur erlaubte Chat-IDs (Umgebungsvariable AKTE_CHATS auf dem Gerät), Rückfragen als Knöpfe.
 - `test_telegram.py`: Prüfung ohne echte Chats und Tokens.
+- `ansicht.py`: was Papa sieht. Immer nur eine Frage, Startzahlen, Rechte nur für die Akte.
+- `fehler.py`: Fehler werden lokal gespeichert und Marco per Telegram gemeldet (AKTE_ADMIN_CHAT auf dem Gerät).
+- `test_ansicht.py`: Prüfung ohne echte Daten.
