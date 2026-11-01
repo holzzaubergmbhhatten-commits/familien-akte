@@ -4,20 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600&display=swap">
 <title>Akte</title>
 <style>
-  :root { --bg:#F2F2F7; --karte:#fff; --text:#1C1C1E; --grau:#8E8E93; --gruen:#34C759; --rot:#FF3B30; --orange:#FF9500; --blau:#2a6fdb; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#000; --karte:#1C1C1E; --text:#F2F2F7; --grau:#98989D; } }
-  :root[data-theme="dark"] { --bg:#000; --karte:#1C1C1E; --text:#F2F2F7; --grau:#98989D; }
+  :root { --bg:#f7f4ed; --karte:#fff; --text:#2d3329; --grau:#6b7266; --gruen:#536b45; --rot:#b5452a; --orange:#c96f4a; --blau:#536b45; --dark:#33442b; --sand:#d8c7a3; --brown:#765c3d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#23291f; --karte:#2e3828; --text:#f7f4ed; --grau:#c9c2b0; --sand:#5a4d35; } }
+  :root[data-theme="dark"] { --bg:#23291f; --karte:#2e3828; --text:#f7f4ed; --grau:#c9c2b0; --sand:#5a4d35; }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system, system-ui, Roboto, sans-serif; font-size:18px; line-height:1.45; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Montserrat', -apple-system, system-ui, sans-serif; font-size:18px; line-height:1.45; }
+  h1,h2 { font-family:'Cormorant Garamond', serif; font-weight:700; }
+  .kopf { background:var(--dark); color:#f7f4ed; text-align:center; padding:22px 16px 26px; margin:-16px -16px 16px; border-radius:0 0 22px 22px; }
+  .kopf img { width:64px; height:auto; display:block; margin:0 auto 6px; filter:drop-shadow(0 3px 6px rgba(0,0,0,.35)); }
+  .kopf small { letter-spacing:2px; text-transform:uppercase; font-size:12px; color:var(--sand); }
+  .kopf h1 { color:#f7f4ed; margin:4px 0 4px; font-size:34px; }
+  .kopf p { margin:0; color:var(--sand); font-size:15px; }
   .wrap { max-width:640px; margin:0 auto; padding:16px; }
   h1 { font-size:26px; margin:8px 0 14px; }
   .karte { background:var(--karte); border-radius:16px; padding:16px; margin-bottom:14px; }
   .zahl { color:var(--grau); font-size:16px; }
-  .frage { border:2px solid var(--orange); }
+  .frage { border:2px solid var(--orange); background:#fbf1ea; }
   .knopf { display:block; width:100%; text-align:left; background:var(--bg); color:var(--text); border:0; border-radius:12px; padding:14px; margin:8px 0; font-size:18px; cursor:pointer; }
   .knopf.gross { background:var(--blau); color:#fff; text-align:center; font-weight:600; }
+  .karte { box-shadow:0 3px 12px rgba(51,68,43,.08); }
   .aktionen { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
   .aktionen button { border:0; border-radius:10px; padding:10px 12px; font-size:16px; background:var(--bg); color:var(--text); cursor:pointer; }
   .aktionen button.rot { color:var(--rot); }
@@ -28,7 +37,7 @@
 </head>
 <body>
 <div class="wrap" id="oben">
-  <h1>📁 Akte</h1>
+  <div class="kopf"><img src="bilder/wappen-schlag.png" alt="Familienwappen"><small>Familie Schlag</small><h1>Akte</h1><p>Unterlagen, Verträge und Abrechnungen. Nur für uns.</p></div>
   <div class="fehler" id="fehler" role="alert"></div>
 
   <div class="karte" id="start"><div id="zusammen" class="zahl">Lade …</div></div>
