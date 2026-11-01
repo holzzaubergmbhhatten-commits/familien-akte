@@ -28,3 +28,5 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 - `test_ansicht.py`: Prüfung ohne echte Daten.
 - `aktionen.py`: Aktionen an Dokumenten wie in der Akte zu Hause (ansehen, Ordner, Foto, Notiz, eingereicht, zusammenfügen, auflösen, löschen mit Bestätigung), dazu Vorgangsarten: Nebenkosten, Mietvertrag, Steuer, Depot, Versicherung, Sonstiges.
 - `test_aktionen.py`: Prüfung ohne echte Dokumente.
+- `server.py`: eigener kleiner Server nur für die Akte-Seite. Passwort als Hash auf dem Gerät (AKTE_PASSWORT_HASH), Sitzung, Fehlversuche werden gebremst. Läuft getrennt von Home Assistant, Zugriff über Tailscale.
+- `test_server.py`: Prüfung der Anmeldung ohne echte Daten.
