@@ -30,19 +30,22 @@ def passwort_hash(passwort, salz=None):
 
 
 def passwort_pruefen(passwort, gespeichert):
-    try:
-        salz_hex, h_hex = gespeichert.split("$", 1)
-    except ValueError:
-        return False
-    neu = passwort_hash(passwort, bytes.fromhex(salz_hex)).split("$", 1)[1]
-    return hmac.compare_digest(neu, h_hex)
+    """Akzeptiert einen gehashten Eintrag (salz$hash) oder ein Klartext-Passwort aus der Gerätedatei."""
+    if "$" in gespeichert and len(gespeichert.split("$", 1)[0]) == 32:
+        try:
+            salz_hex, h_hex = gespeichert.split("$", 1)
+            neu = passwort_hash(passwort, bytes.fromhex(salz_hex)).split("$", 1)[1]
+            return hmac.compare_digest(neu, h_hex)
+        except ValueError:
+            return False
+    return hmac.compare_digest(passwort.encode("utf-8"), gespeichert.encode("utf-8"))
 
 
 def gespeicherter_hash():
-    """Liest den Hash aus AKTE_PFAD/passwort.hash (wird von passwort_setzen.py angelegt)."""
-    datei = os.path.join(os.environ.get("AKTE_PFAD", "."), "passwort.hash")
+    """Liest das Passwort aus AKTE_PFAD/passwort.txt (Datei nur auf dem Gerät, nie im Repository)."""
+    datei = os.path.join(os.environ.get("AKTE_PFAD", "."), "passwort.txt")
     if not os.path.isfile(datei):
-        raise RuntimeError("Noch kein Passwort gesetzt: passwort_setzen.py ausführen")
+        raise RuntimeError("Noch kein Passwort: Datei passwort.txt anlegen")
     with open(datei, encoding="utf-8") as f:
         return f.read().strip()
 

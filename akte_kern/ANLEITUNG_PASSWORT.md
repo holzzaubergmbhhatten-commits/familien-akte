@@ -1,9 +1,7 @@
-# Passwort für Papa festlegen (auf dem Gerät)
+# Passwort für Papas Akte (ohne Terminal)
 
-1. Auf dem Gerät im Ordner `akte_kern` den Befehl ausführen: `python3 passwort_setzen.py`
-2. Ein Passwort mit mindestens 10 Zeichen eingeben, zweimal.
-3. Es erscheint eine lange Zeile (der Hash). Diese Zeile kopieren.
-4. Die Zeile als Umgebungsvariable `passwort.hash (Datei)` eintragen (nur auf dem Gerät).
-5. Das Passwort selbst aufschreiben und Papa geben. Es wird nirgends gespeichert.
+1. Im Home Assistant das Add-on **Datei-Editor** installieren (Apps → Store → Datei-Editor → Installieren).
+2. Im Datei-Editor den Ordner **akte_papa** öffnen (wird beim Start des Servers angelegt, oder du legst ihn an).
+3. Eine neue Datei **passwort.txt** anlegen. Nur das Passwort hineinschreiben, sonst nichts. Speichern.
 
-Wichtig: Diese Datei und der Hash gehören nicht ins Repository und nicht in den Chat.
+Die Datei liegt nur auf dem Gerät. Sie gehört nicht ins Repository und nicht in den Chat.
