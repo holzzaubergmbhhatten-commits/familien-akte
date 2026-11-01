@@ -10,3 +10,4 @@ daten/
 secrets*
 *.key
 *.env
+__pycache__/

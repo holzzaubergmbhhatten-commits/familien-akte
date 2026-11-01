@@ -9,9 +9,9 @@ import shutil
 from datetime import datetime
 
 OBJEKTE = {
-    "birk": "Birkenheider Straße 24 (2 Einheiten)",
-    "gruppen": "Gruppenbührener Straße (5 Einheiten)",
-    "glock": "Glockenstein (verwaltet für Eigentümerin)",
+    "haus1": "Haus 1 (Name auf dem Gerät)",
+    "haus2": "Haus 2 (Name auf dem Gerät)",
+    "haus3": "Haus 3 (Name auf dem Gerät)",
     "privat": "Privat (Depots, Konten, Versicherungen)",
     "unklar": "Noch unklar",
 }
