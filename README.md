@@ -30,3 +30,5 @@ Dieses Repository enthält NUR den Code. Alle Daten liegen auf dem Gerät (Home 
 - `test_aktionen.py`: Prüfung ohne echte Dokumente.
 - `server.py`: eigener kleiner Server nur für die Akte-Seite. Passwort als Hash auf dem Gerät (AKTE_PASSWORT_HASH), Sitzung, Fehlversuche werden gebremst. Läuft getrennt von Home Assistant, Zugriff über Tailscale.
 - `test_server.py`: Prüfung der Anmeldung ohne echte Daten.
+- `chat_pruefung.py`: Trennung der Akten. Bot und Chat müssen zusammenpassen, sonst wird verworfen. Zwei getrennte Ordner.
+- `test_chat_pruefung.py`: Prüfung der Trennung ohne echte Chats.
